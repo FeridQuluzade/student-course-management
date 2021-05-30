@@ -16,6 +16,7 @@ public class StudentDataAccessService {
     public StudentDataAccessService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
     List<Student> selectAllStudents() {
         String sql = "" +
                 "SELECT " +
@@ -26,8 +27,9 @@ public class StudentDataAccessService {
                 " gender " +
                 "FROM student";
 
-        return jdbcTemplate.query(sql,mapStudentFomDb());
+        return jdbcTemplate.query(sql, mapStudentFomDb());
     }
+
     int insertStudent(UUID studentId, Student student) {
         String sql = "" +
                 "INSERT INTO student (" +
@@ -62,9 +64,6 @@ public class StudentDataAccessService {
         );
     }
 
-
-
-
     private RowMapper<Student> mapStudentFomDb() {
         return (resultSet, i) -> {
             String studentIdStr = resultSet.getString("student_id");
@@ -85,6 +84,7 @@ public class StudentDataAccessService {
             );
         };
     }
+
     private RowMapper<StudentCourse> mapStudentCourseFromDb() {
         return (resultSet, i) ->
                 new StudentCourse(
