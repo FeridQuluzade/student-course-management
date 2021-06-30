@@ -1,23 +1,27 @@
-package student_management_system.demo3.student;
+package student_management_system.demo3.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import student_management_system.demo3.model.Student;
+import student_management_system.demo3.model.StudentCourse;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class StudentDataAccessService {
+public class StudentRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final StudentMapper studentMapper;
 
-    public StudentDataAccessService(JdbcTemplate jdbcTemplate) {
+    public StudentRepository(JdbcTemplate jdbcTemplate,StudentMapper studentMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.studentMapper=studentMapper;
     }
 
-    List<Student> selectAllStudents() {
+    public List<Student> selectAllStudents() {
         String sql = "" +
                 "SELECT " +
                 " student_id, " +
@@ -27,10 +31,11 @@ public class StudentDataAccessService {
                 " gender " +
                 "FROM student";
 
-        return jdbcTemplate.query(sql, mapStudentFomDb());
+        return jdbcTemplate.query(sql, studentMapper.mapStudentFomDb());
     }
 
-    int insertStudent(UUID studentId, Student student) {
+
+    public Student insertStudent(UUID studentId, Student student) {
         String sql = "" +
                 "INSERT INTO student (" +
                 " student_id, " +
@@ -39,7 +44,7 @@ public class StudentDataAccessService {
                 " email, " +
                 " gender) " +
                 "VALUES (?, ?, ?, ?, ?::gender)";
-        return jdbcTemplate.update(
+         jdbcTemplate.update(
                 sql,
                 studentId,
                 student.getFirstName(),
@@ -47,10 +52,11 @@ public class StudentDataAccessService {
                 student.getEmail(),
                 student.getGender().name().toUpperCase()
         );
+         return student;
     }
 
     @SuppressWarnings("ConstantConditions")
-    boolean isEmailTaken(String email) {
+    public boolean isEmailTaken(String email) {
         String sql = "" +
                 "SELECT EXISTS ( " +
                 " SELECT 1 " +
@@ -64,45 +70,11 @@ public class StudentDataAccessService {
         );
     }
 
-    private RowMapper<Student> mapStudentFomDb() {
-        return (resultSet, i) -> {
-            String studentIdStr = resultSet.getString("student_id");
-            UUID studentId = UUID.fromString(studentIdStr);
 
-            String firstName = resultSet.getString("first_name");
-            String lastName = resultSet.getString("last_name");
-            String email = resultSet.getString("email");
 
-            String genderStr = resultSet.getString("gender").toUpperCase();
-            Student.Gender gender = Student.Gender.valueOf(genderStr);
-            return new Student(
-                    studentId,
-                    firstName,
-                    lastName,
-                    email,
-                    gender
-            );
-        };
-    }
 
-    private RowMapper<StudentCourse> mapStudentCourseFromDb() {
-        return (resultSet, i) ->
-                new StudentCourse(
-                        UUID.fromString(resultSet.getString("student_id")),
-                        UUID.fromString(resultSet.getString("course_id")),
-                        resultSet.getString("name"),
-                        resultSet.getString("description"),
-                        resultSet.getString("department"),
-                        resultSet.getString("teacher_name"),
-                        resultSet.getDate("start_date").toLocalDate(),
-                        resultSet.getDate("end_date").toLocalDate(),
-                        Optional.ofNullable(resultSet.getString("grade"))
-                                .map(Integer::parseInt)
-                                .orElse(null)
-                );
-    }
 
-    List<StudentCourse> selectAllStudentCourses(UUID studentId) {
+    public List<StudentCourse> selectAllStudentCourses(UUID studentId) {
         String sql = "" +
                 "SELECT " +
                 " student.student_id, " +
@@ -121,11 +93,11 @@ public class StudentDataAccessService {
         return jdbcTemplate.query(
                 sql,
                 new Object[]{studentId},
-                mapStudentCourseFromDb()
+                studentMapper.mapStudentCourseFromDb()
         );
     }
 
-    int updateEmail(UUID studentId, String email) {
+    public int updateEmail(UUID studentId, String email) {
         String sql = "" +
                 "UPDATE student " +
                 "SET email = ? " +
@@ -133,7 +105,7 @@ public class StudentDataAccessService {
         return jdbcTemplate.update(sql, email, studentId);
     }
 
-    int updateFirstName(UUID studentId, String firstName) {
+    public int updateFirstName(UUID studentId, String firstName) {
         String sql = "" +
                 "UPDATE student " +
                 "SET first_name = ? " +
@@ -141,7 +113,7 @@ public class StudentDataAccessService {
         return jdbcTemplate.update(sql, firstName, studentId);
     }
 
-    int updateLastName(UUID studentId, String lastName) {
+    public int updateLastName(UUID studentId, String lastName) {
         String sql = "" +
                 "UPDATE student " +
                 "SET last_name = ? " +
@@ -150,7 +122,7 @@ public class StudentDataAccessService {
     }
 
     @SuppressWarnings("ConstantConditions")
-    boolean selectExistsEmail(UUID studentId, String email) {
+    public boolean selectExistsEmail(UUID studentId, String email) {
         String sql = "" +
                 "SELECT EXISTS ( " +
                 "   SELECT 1 " +
@@ -165,7 +137,7 @@ public class StudentDataAccessService {
         );
     }
 
-    int deleteStudentById(UUID studentId) {
+    public int deleteStudentById(UUID studentId) {
         String sql = "" +
                 "DELETE FROM student " +
                 "WHERE student_id = ?";

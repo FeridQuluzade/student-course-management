@@ -1,11 +1,14 @@
-package student_management_system.demo3.student;
+package student_management_system.demo3.model;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.UUID;
 
 public class Student {
+    @JsonIgnore
     private final UUID studentId;
 
     @NotBlank
@@ -63,7 +66,7 @@ public class Student {
                 '}';
     }
 
-    enum Gender {
+    public enum Gender {
         MALE, FEMALE
     }
 }
