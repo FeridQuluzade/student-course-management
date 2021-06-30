@@ -1,4 +1,4 @@
-package student_management_system.demo3.student;
+package student_management_system.demo3.model;
 
 import java.time.LocalDate;
 import java.util.UUID;

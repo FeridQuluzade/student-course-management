@@ -4,7 +4,7 @@
 
 app:
   datasource:
-    jdbc-url: jdbc:postgresql://localhost:5432/students
+    jdbc-url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: Pass1234
     pool-size: 30

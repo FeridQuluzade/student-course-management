@@ -1,7 +1,10 @@
-package student_management_system.demo3.student;
+package student_management_system.demo3.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import student_management_system.demo3.model.Student;
+import student_management_system.demo3.model.StudentCourse;
+import student_management_system.demo3.service.StudentService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -29,9 +32,10 @@ public class StudentController {
         return studentService.getAllCoursesForStudent(studentId);
     }
 
-    @PostMapping
-    public void addNewStudent(@RequestBody @Valid Student student) {
+    @PostMapping(path = "")
+    public Student addNewStudent(@RequestBody @Valid Student student) {
         studentService.addNewStudent(student);
+        return student;
     }
 
     @PutMapping(path = "{studentId}")
