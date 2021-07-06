@@ -1,10 +1,11 @@
 package student_management_system.demo3.service;
 
 import org.springframework.stereotype.Service;
-import student_management_system.demo3.dao.CourseMapper;
 import student_management_system.demo3.dao.CourseRepository;
+import student_management_system.demo3.exception.ApiRequestException;
 import student_management_system.demo3.model.Course;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,6 +16,15 @@ public class CourseService {
 
     public CourseService(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
+    }
+
+    public List<Course> getAllCourses(){
+        return courseRepository.selectAllCourses();
+    }
+
+    public Optional<Course> getCourseById(UUID courseId){
+        return Optional.of(courseRepository.selectCourseById(courseId))
+                .orElseThrow(() -> new ApiRequestException("Course couldn't be found by following id:"));
     }
 
     public Course addNewCourse(Course course){
@@ -29,4 +39,5 @@ public class CourseService {
 
         return course;
     }
+
 }

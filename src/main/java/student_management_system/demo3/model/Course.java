@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 public class Course {
-    @JsonIgnore
+
     private final UUID courseİd;
 
     @NotBlank

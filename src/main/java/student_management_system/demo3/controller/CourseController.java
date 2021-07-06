@@ -1,13 +1,13 @@
 package student_management_system.demo3.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import student_management_system.demo3.model.Course;
 import student_management_system.demo3.service.CourseService;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/courses")
@@ -16,6 +16,15 @@ public class CourseController {
 
     public CourseController(CourseService courseService) {
         this.courseService = courseService;
+    }
+    @GetMapping
+    public List<Course> getAllCourses(){
+        return courseService.getAllCourses();
+    }
+
+    @GetMapping("/{courseId}")
+    public Optional<Course> getCourseById(@PathVariable("courseId") @Valid UUID courseId){
+        return courseService.getCourseById(courseId);
     }
 
     @PostMapping
