@@ -31,9 +31,11 @@ public class CourseRepository {
         return jdbcTemplate.query(sql, courseMapper.mapCourseFromDb());
     }
 
-    public Optional<Course> selectCourseById(UUID courseId ){
-        String sql="select * from course where course_id=?";
-        return Optional.of(jdbcTemplate.queryForObject(sql, new Object[]{courseId}, courseMapper.mapCourseFromDb()));
+    public Optional<Course> selectCourseById(UUID courseId) {
+        String sql = "select * from course where course_id=?";
+        return Optional.of(jdbcTemplate
+                .queryForObject(sql, new Object[]{courseId},
+                        courseMapper.mapCourseFromDb()));
     }
 
     public Course insertCourse(UUID courseId, Course course) {
@@ -51,5 +53,12 @@ public class CourseRepository {
                 course.getDepartment(),
                 course.getTeacherName());
         return course;
+    }
+
+
+    public int deleteCourseById(UUID courseId) {
+        String sql = "delete from  course " +
+                "where course_id=?";
+        return jdbcTemplate.update(sql, courseId);
     }
 }

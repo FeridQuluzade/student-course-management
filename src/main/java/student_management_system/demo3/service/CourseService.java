@@ -18,26 +18,31 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public List<Course> getAllCourses(){
+    public List<Course> getAllCourses() {
         return courseRepository.selectAllCourses();
     }
 
-    public Optional<Course> getCourseById(UUID courseId){
+    public Optional<Course> getCourseById(UUID courseId) {
         return Optional.of(courseRepository.selectCourseById(courseId))
-                .orElseThrow(() -> new ApiRequestException("Course couldn't be found by following id:"));
+                .orElseThrow(() ->
+                        new ApiRequestException("Course couldn't be found by following id:" + courseId));
     }
 
-    public Course addNewCourse(Course course){
-        addNewCourse(null,course);
+    public Course addNewCourse(Course course) {
+        addNewCourse(null, course);
         return course;
     }
 
-    public Course addNewCourse(UUID courseId,Course course){
-        UUID newCourseId= Optional.ofNullable(courseId)
+    public Course addNewCourse(UUID courseId, Course course) {
+        UUID newCourseId = Optional.ofNullable(courseId)
                 .orElse(UUID.randomUUID());
-        courseRepository.insertCourse(newCourseId,course);
+        courseRepository.insertCourse(newCourseId, course);
 
         return course;
+    }
+
+    public void deleteStudent(UUID courseId) {
+        courseRepository.deleteCourseById(courseId);
     }
 
 }

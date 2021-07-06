@@ -17,6 +17,7 @@ public class CourseController {
     public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
+
     @GetMapping
     public List<Course> getAllCourses(){
         return courseService.getAllCourses();
@@ -27,9 +28,14 @@ public class CourseController {
         return courseService.getCourseById(courseId);
     }
 
-    @PostMapping
+    @PostMapping("")
     public Course addNewStudent(@RequestBody @Valid Course course){
         courseService.addNewCourse(course);
         return  course;
+    }
+
+    @DeleteMapping("{courseId}")
+    public void deleteCourseById(@PathVariable("courseId") UUID courseId){
+        courseService.deleteStudent(courseId);
     }
 }
