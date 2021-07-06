@@ -10,14 +10,14 @@ public class Course {
     private final UUID courseİd;
 
     @NotBlank
-    private final String  name;
+    private final String name;
 
     @NotBlank
     private final String description;
 
     @NotBlank
     private final String department;
-
+    @NotBlank
     private final String teacherName;
 
     public Course(UUID courseİd,
@@ -27,7 +27,7 @@ public class Course {
                   String teacherName) {
         this.courseİd = courseİd;
         this.name = name;
-        this.department=department;
+        this.department = department;
         this.description = description;
         this.teacherName = teacherName;
     }
