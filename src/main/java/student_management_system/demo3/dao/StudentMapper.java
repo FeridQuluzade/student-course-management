@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @Configuration
 public class StudentMapper {
+
     @Bean
     public RowMapper<Student> mapStudentFomDb() {
         return (resultSet, i) -> {
@@ -32,6 +33,8 @@ public class StudentMapper {
             );
         };
     }
+
+
 
     @Bean
     public RowMapper<StudentCourse> mapStudentCourseFromDb() {

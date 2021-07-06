@@ -19,7 +19,7 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final EmailValidator emailValidator;
 
-    @Autowired
+
     public StudentService(StudentRepository studentRepository,
                           EmailValidator emailValidator) {
         this.studentRepository = studentRepository;
@@ -30,7 +30,14 @@ public class StudentService {
         return studentRepository.selectAllStudents();
     }
 
+    public Student getStudentById(UUID studentId) {
+        return studentRepository.selectStudentById(studentId);
 
+    }
+
+    public int updateEmail(UUID studentId, String email) {
+        return studentRepository.updateEmail(studentId, email);
+    }
 
     public Student addNewStudent(Student student) {
         addNewStudent(null, student);

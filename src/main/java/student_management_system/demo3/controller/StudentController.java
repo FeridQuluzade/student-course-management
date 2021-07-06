@@ -26,6 +26,11 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
+    @GetMapping("/{studentId}")
+    public Student getStudentById(@PathVariable("studentId") @Valid UUID studentId) {
+        return studentService.getStudentById(studentId);
+    }
+
     @GetMapping(path = "{studentId}/courses")
     public List<StudentCourse> getAllCoursesForStudent(
             @PathVariable("studentId") UUID studentId) {
@@ -36,6 +41,13 @@ public class StudentController {
     public Student addNewStudent(@RequestBody @Valid Student student) {
         studentService.addNewStudent(student);
         return student;
+    }
+
+    @PatchMapping (path = "{studentId}")
+    public int updateEmail(@PathVariable("studentId") UUID studentId,
+                         @RequestBody String email) {
+        return studentService.updateEmail(studentId, email);
+
     }
 
     @PutMapping(path = "{studentId}")

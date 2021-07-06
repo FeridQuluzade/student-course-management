@@ -1,13 +1,11 @@
 package student_management_system.demo3.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import student_management_system.demo3.model.Student;
 import student_management_system.demo3.model.StudentCourse;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -33,7 +31,27 @@ public class StudentRepository {
 
         return jdbcTemplate.query(sql, studentMapper.mapStudentFomDb());
     }
+    public Student selectStudentById(UUID studentId) {
+        String sql = "" +
+                "SELECT " +
+                " student_id, " +
+                " first_name, " +
+                " last_name, " +
+                " email, " +
+                " gender " +
+                "FROM student WHERE student_id=?" ;
 
+
+       return jdbcTemplate.queryForObject(sql,new Object[]{studentId},studentMapper.mapStudentFomDb());
+    }
+
+    public int updateEmail(UUID studentId, String email) {
+        String sql = "" +
+                "UPDATE student " +
+                "SET email = ? " +
+                "WHERE student_id = ?";
+        return jdbcTemplate.update(sql, email, studentId);
+    }
 
     public Student insertStudent(UUID studentId, Student student) {
         String sql = "" +
@@ -71,9 +89,6 @@ public class StudentRepository {
     }
 
 
-
-
-
     public List<StudentCourse> selectAllStudentCourses(UUID studentId) {
         String sql = "" +
                 "SELECT " +
@@ -97,13 +112,7 @@ public class StudentRepository {
         );
     }
 
-    public int updateEmail(UUID studentId, String email) {
-        String sql = "" +
-                "UPDATE student " +
-                "SET email = ? " +
-                "WHERE student_id = ?";
-        return jdbcTemplate.update(sql, email, studentId);
-    }
+
 
     public int updateFirstName(UUID studentId, String firstName) {
         String sql = "" +
