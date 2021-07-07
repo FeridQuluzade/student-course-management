@@ -34,8 +34,15 @@ public class CourseController {
         return  course;
     }
 
+    @PutMapping("{courseId}")
+    public void updateCourse(@PathVariable("courseId") UUID courseId,
+                             @RequestBody Course course){
+        courseService.updateCourse(courseId,course);
+    }
+
     @DeleteMapping("{courseId}")
     public void deleteCourseById(@PathVariable("courseId") UUID courseId){
-        courseService.deleteStudent(courseId);
+        courseService.deleteCourse(courseId);
     }
+
 }

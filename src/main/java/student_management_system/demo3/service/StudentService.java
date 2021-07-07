@@ -32,7 +32,6 @@ public class StudentService {
 
     public Student getStudentById(UUID studentId) {
         return studentRepository.selectStudentById(studentId);
-
     }
 
     public int updateEmail(UUID studentId, String email) {

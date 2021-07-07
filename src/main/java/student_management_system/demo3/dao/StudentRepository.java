@@ -2,6 +2,7 @@ package student_management_system.demo3.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import student_management_system.demo3.dao.mapper.StudentMapper;
 import student_management_system.demo3.model.Student;
 import student_management_system.demo3.model.StudentCourse;
 

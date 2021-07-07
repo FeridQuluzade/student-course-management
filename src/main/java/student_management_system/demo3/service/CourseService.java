@@ -23,9 +23,14 @@ public class CourseService {
     }
 
     public Optional<Course> getCourseById(UUID courseId) {
-        return Optional.of(courseRepository.selectCourseById(courseId))
-                .orElseThrow(() ->
-                        new ApiRequestException("Course couldn't be found by following id:" + courseId));
+        return findCourseById(courseId);
+    }
+
+
+    private Optional<Course> findCourseById(UUID courseId){
+        return Optional.of(courseRepository
+                .selectCourseById(courseId)
+                .orElseThrow(()-> new ApiRequestException("Course couldn't be found by following id:" + courseId)));
     }
 
     public Course addNewCourse(Course course) {
@@ -41,8 +46,20 @@ public class CourseService {
         return course;
     }
 
-    public void deleteStudent(UUID courseId) {
+    public void deleteCourse(UUID courseId) {
         courseRepository.deleteCourseById(courseId);
+    }
+
+    public void updateCourse(UUID courseId,Course course){
+        Course course1=findCourseById(courseId).get();
+        Course updateUser=new Course(
+                course1.getCourseİd(),
+                course.getName(),
+                course.getDescription(),
+                course.getDepartment(),
+                course.getTeacherName()
+        );
+        courseRepository.updateCourse(courseId,updateUser);
     }
 
 }
