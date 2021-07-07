@@ -2,11 +2,10 @@ package student_management_system.demo3.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import student_management_system.demo3.exception.ApiRequestException;
+import student_management_system.demo3.dao.mapper.CourseMapper;
 import student_management_system.demo3.model.Course;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,6 +35,15 @@ public class CourseRepository {
         return Optional.of(jdbcTemplate
                 .queryForObject(sql, new Object[]{courseId},
                         courseMapper.mapCourseFromDb()));
+    }
+    public void updateCourse(UUID courseId,Course course){
+        String sql="update course set name=?,description=?,department=?,teacher_name=? where course_id=?";
+         jdbcTemplate.update(sql,
+                 course.getName(),
+                 course.getDescription(),
+                 course.getDepartment(),
+                 course.getTeacherName(),
+                 courseId);
     }
 
     public Course insertCourse(UUID courseId, Course course) {

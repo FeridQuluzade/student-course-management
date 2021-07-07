@@ -1,4 +1,4 @@
-package student_management_system.demo3.dao;
+package student_management_system.demo3.dao.mapper;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
