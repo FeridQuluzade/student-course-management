@@ -2,22 +2,22 @@ package student_management_system.demo3.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import student_management_system.demo3.dao.mapper.StudentMapper;
 import student_management_system.demo3.model.Student;
 import student_management_system.demo3.model.StudentCourse;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public class StudentRepository {
 
     private final JdbcTemplate jdbcTemplate;
-    private final StudentMapper studentMapper;
 
-    public StudentRepository(JdbcTemplate jdbcTemplate,StudentMapper studentMapper) {
+
+    public StudentRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.studentMapper=studentMapper;
+
     }
 
     public List<Student> selectAllStudents() {
@@ -29,9 +29,18 @@ public class StudentRepository {
                 " email, " +
                 " gender " +
                 "FROM student";
-
-        return jdbcTemplate.query(sql, studentMapper.mapStudentFomDb());
+        return jdbcTemplate.query(sql,
+                (resultSet, i) ->
+                        new Student(
+                                UUID.fromString(resultSet.getString("student_id")),
+                                resultSet.getString("first_name"),
+                                resultSet.getString("last_name"),
+                                resultSet.getString("email"),
+                                Student.Gender.valueOf(resultSet.getString("gender").toUpperCase())
+                        ));
+//        return jdbcTemplate.query(sql, studentMapper.mapStudentFomDb());
     }
+
     public Student selectStudentById(UUID studentId) {
         String sql = "" +
                 "SELECT " +
@@ -40,10 +49,15 @@ public class StudentRepository {
                 " last_name, " +
                 " email, " +
                 " gender " +
-                "FROM student WHERE student_id=?" ;
+                "FROM student WHERE student_id=?";
 
 
-       return jdbcTemplate.queryForObject(sql,new Object[]{studentId},studentMapper.mapStudentFomDb());
+        return jdbcTemplate.queryForObject(sql, new Object[]{studentId}, ((resultSet, i) -> new Student(
+                UUID.fromString(resultSet.getString("student_id")),
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getString("email"),
+                Student.Gender.valueOf(resultSet.getString("gender").toUpperCase()) )));
     }
 
     public int updateEmail(UUID studentId, String email) {
@@ -63,7 +77,7 @@ public class StudentRepository {
                 " email, " +
                 " gender) " +
                 "VALUES (?, ?, ?, ?, ?::gender)";
-         jdbcTemplate.update(
+        jdbcTemplate.update(
                 sql,
                 studentId,
                 student.getFirstName(),
@@ -71,7 +85,7 @@ public class StudentRepository {
                 student.getEmail(),
                 student.getGender().name().toUpperCase()
         );
-         return student;
+        return student;
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -109,10 +123,22 @@ public class StudentRepository {
         return jdbcTemplate.query(
                 sql,
                 new Object[]{studentId},
-                studentMapper.mapStudentCourseFromDb()
+                (resultSet, i) ->
+                        new StudentCourse(
+                                UUID.fromString(resultSet.getString("student_id")),
+                                UUID.fromString(resultSet.getString("course_id")),
+                                resultSet.getString("name"),
+                                resultSet.getString("description"),
+                                resultSet.getString("department"),
+                                resultSet.getString("teacher_name"),
+                                resultSet.getDate("start_date").toLocalDate(),
+                                resultSet.getDate("end_date").toLocalDate(),
+                                Optional.ofNullable(resultSet.getString("grade"))
+                                        .map(Integer::parseInt)
+                                        .orElse(null)
+                        )
         );
     }
-
 
 
     public int updateFirstName(UUID studentId, String firstName) {

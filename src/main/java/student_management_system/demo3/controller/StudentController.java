@@ -1,6 +1,7 @@
 package student_management_system.demo3.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import student_management_system.demo3.model.Student;
 import student_management_system.demo3.model.StudentCourse;
@@ -22,25 +23,26 @@ public class StudentController {
 
 
     @GetMapping
-    public List<Student> getAllStudents() {
-        return studentService.getAllStudents();
+    public ResponseEntity<List<Student>> getAllStudents() {
+        System.out.println("lsjgla");
+        return ResponseEntity.ok(studentService.getAllStudents());
     }
 
     @GetMapping("/{studentId}")
-    public Student getStudentById(@PathVariable("studentId") @Valid UUID studentId) {
-        return studentService.getStudentById(studentId);
+    public ResponseEntity<Student> getStudentById(@PathVariable("studentId") @Valid UUID studentId) {
+        return ResponseEntity.ok(studentService.getStudentById(studentId));
     }
 
     @GetMapping(path = "{studentId}/courses")
-    public List<StudentCourse> getAllCoursesForStudent(
+    public ResponseEntity<List<StudentCourse>> getAllCoursesForStudent(
             @PathVariable("studentId") UUID studentId) {
-        return studentService.getAllCoursesForStudent(studentId);
+        return ResponseEntity.ok(studentService.getAllCoursesForStudent(studentId));
     }
 
     @PostMapping(path = "")
-    public Student addNewStudent(@RequestBody @Valid Student student) {
+    public ResponseEntity<Student> addNewStudent(@RequestBody @Valid Student student) {
         studentService.addNewStudent(student);
-        return student;
+        return ResponseEntity.ok(student);
     }
 
     @PatchMapping (path = "{studentId}")
@@ -57,8 +59,9 @@ public class StudentController {
     }
 
     @DeleteMapping("{studentId}")
-    public void deleteStudent(@PathVariable("studentId") UUID studentId) {
+    public ResponseEntity<Void> deleteStudent(@PathVariable("studentId") UUID studentId) {
         studentService.deleteStudent(studentId);
+        return ResponseEntity.ok().build();
     }
 
 }
