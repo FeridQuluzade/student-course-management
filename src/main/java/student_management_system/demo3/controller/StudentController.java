@@ -24,7 +24,7 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
-        ResponseEntity.ok(studentService.getAllStudents());
+
         return new ResponseEntity<>(studentService.getAllStudents(),HttpStatus.OK);
     }
 
@@ -63,9 +63,7 @@ public class StudentController {
     @PatchMapping(path = "{studentId}")
     public ResponseEntity<Integer> updateEmail(@PathVariable("studentId") UUID studentId,
                                                @RequestBody String email) {
-
         return new ResponseEntity<Integer>( studentService.updateEmail(studentId, email),HttpStatus.ACCEPTED);
-
     }
 
 }

@@ -1,5 +1,6 @@
 package student_management_system.demo3.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import student_management_system.demo3.model.Course;
@@ -20,33 +21,31 @@ public class CourseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Course>> getAllCourses(){
-
-        return ResponseEntity.ok(courseService.getAllCourses());
+    public ResponseEntity<List<Course>> getAllCourses() {
+        return new ResponseEntity<>(courseService.getAllCourses(), HttpStatus.OK);
     }
 
     @GetMapping("/{courseId}")
-    public ResponseEntity<Optional<Course>> getCourseById(@PathVariable("courseId") @Valid UUID courseId){
-        return ResponseEntity.ok(courseService.getCourseById(courseId));
+    public ResponseEntity<Optional<Course>> getCourseById(@PathVariable("courseId") @Valid UUID courseId) {
+        return new ResponseEntity<>(courseService.getCourseById(courseId), HttpStatus.OK);
     }
 
     @PostMapping("")
-    public ResponseEntity<Course> addNewStudent(@RequestBody @Valid Course course){
-        courseService.addNewCourse(course);
-        return  ResponseEntity.ok(course);
+    public ResponseEntity<Course> addNewCourse(@RequestBody @Valid Course course) {
+        return new ResponseEntity<>(courseService.addNewCourse(course), HttpStatus.CREATED);
     }
 
     @PutMapping("{courseId}")
     public ResponseEntity<Void> updateCourse(@PathVariable("courseId") UUID courseId,
-                             @RequestBody Course course){
-        courseService.updateCourse(courseId,course);
-       return ResponseEntity.ok().build();
+                                             @RequestBody Course course) {
+        courseService.updateCourse(courseId, course);
+        return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("{courseId}")
-    public ResponseEntity<Void> deleteCourseById(@PathVariable("courseId") UUID courseId){
+    public ResponseEntity<Void> deleteCourseById(@PathVariable("courseId") UUID courseId) {
         courseService.deleteCourse(courseId);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
     }
 
 }
