@@ -1,0 +1,3 @@
+app:
+  datasource:
+    jdbc-url: ${Jdbc_Url_Dev}
