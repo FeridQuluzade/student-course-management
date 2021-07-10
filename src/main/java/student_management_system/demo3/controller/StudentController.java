@@ -1,6 +1,6 @@
 package student_management_system.demo3.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import student_management_system.demo3.model.Student;
@@ -24,45 +24,47 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
-        System.out.println("lsjgla");
-        return ResponseEntity.ok(studentService.getAllStudents());
+        ResponseEntity.ok(studentService.getAllStudents());
+        return new ResponseEntity<>(studentService.getAllStudents(),HttpStatus.OK);
     }
 
     @GetMapping("/{studentId}")
     public ResponseEntity<Student> getStudentById(@PathVariable("studentId") @Valid UUID studentId) {
-        return ResponseEntity.ok(studentService.getStudentById(studentId));
+        ResponseEntity.ok(studentService.getStudentById(studentId));
+        return new ResponseEntity<>(studentService.getStudentById(studentId),HttpStatus.OK);
     }
 
     @GetMapping(path = "{studentId}/courses")
     public ResponseEntity<List<StudentCourse>> getAllCoursesForStudent(
             @PathVariable("studentId") UUID studentId) {
-        return ResponseEntity.ok(studentService.getAllCoursesForStudent(studentId));
+
+        return new ResponseEntity<>(studentService.getAllCoursesForStudent(studentId),HttpStatus.OK);
     }
 
     @PostMapping(path = "")
     public ResponseEntity<Student> addNewStudent(@RequestBody @Valid Student student) {
-        studentService.addNewStudent(student);
-        return ResponseEntity.ok(student);
+        return new ResponseEntity<>(studentService.addNewStudent(student), HttpStatus.CREATED);
     }
 
 
     @PutMapping(path = "{studentId}")
     public ResponseEntity<Void> updateStudent(@PathVariable("studentId") UUID studentId,
                                               @RequestBody Student student) {
-        studentService.updateStudent(studentId, student);
-        return ResponseEntity.ok().build();
+        studentService.updateStudent(studentId,student);
+        return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("{studentId}")
     public ResponseEntity<Void> deleteStudent(@PathVariable("studentId") UUID studentId) {
         studentService.deleteStudent(studentId);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
     }
 
     @PatchMapping(path = "{studentId}")
-    public int updateEmail(@PathVariable("studentId") UUID studentId,
-                           @RequestBody String email) {
-        return studentService.updateEmail(studentId, email);
+    public ResponseEntity<Integer> updateEmail(@PathVariable("studentId") UUID studentId,
+                                               @RequestBody String email) {
+
+        return new ResponseEntity<Integer>( studentService.updateEmail(studentId, email),HttpStatus.ACCEPTED);
 
     }
 
