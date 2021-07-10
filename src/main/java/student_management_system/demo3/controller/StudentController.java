@@ -1,5 +1,6 @@
 package student_management_system.demo3.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,8 @@ import student_management_system.demo3.service.StudentService;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
+
+import static student_management_system.demo3.model.HttpReaders.HTTP_HEADER;
 
 @RestController
 @RequestMapping("api/students")
@@ -29,9 +32,13 @@ public class StudentController {
     }
 
     @GetMapping("/{studentId}")
-    public ResponseEntity<Student> getStudentById(@PathVariable("studentId") @Valid UUID studentId) {
-        ResponseEntity.ok(studentService.getStudentById(studentId));
-        return new ResponseEntity<>(studentService.getStudentById(studentId),HttpStatus.OK);
+    public ResponseEntity<Student> getStudentById(@PathVariable("studentId") @Valid UUID studentId,
+                                                  @RequestHeader(HTTP_HEADER) String httpHeader) {
+
+        HttpHeaders httpHeaders= new HttpHeaders();
+        httpHeaders.add("Response-Header-GetStudentById","getStudentByIdTest");
+        System.out.println(httpHeader);
+        return new ResponseEntity<>(studentService.getStudentById(studentId),httpHeaders,HttpStatus.OK);
     }
 
     @GetMapping(path = "{studentId}/courses")
