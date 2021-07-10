@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DataSource {
-
     @Bean
     @ConfigurationProperties("app.datasource")
     public HikariDataSource hikariDataSource() {

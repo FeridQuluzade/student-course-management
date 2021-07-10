@@ -27,6 +27,7 @@ public class StudentService {
     }
 
     public List<Student> getAllStudents() {
+        System.out.println("adsdjhgja");
         return studentRepository.selectAllStudents();
     }
 
