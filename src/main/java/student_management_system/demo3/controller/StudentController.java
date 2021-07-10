@@ -16,7 +16,7 @@ import java.util.UUID;
 public class StudentController {
     private final StudentService studentService;
 
-    @Autowired
+
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
@@ -45,23 +45,25 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @PatchMapping (path = "{studentId}")
-    public int updateEmail(@PathVariable("studentId") UUID studentId,
-                         @RequestBody String email) {
-        return studentService.updateEmail(studentId, email);
-
-    }
 
     @PutMapping(path = "{studentId}")
-    public void updateStudent(@PathVariable("studentId") UUID studentId,
-                              @RequestBody Student student) {
+    public ResponseEntity<Void> updateStudent(@PathVariable("studentId") UUID studentId,
+                                              @RequestBody Student student) {
         studentService.updateStudent(studentId, student);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("{studentId}")
     public ResponseEntity<Void> deleteStudent(@PathVariable("studentId") UUID studentId) {
         studentService.deleteStudent(studentId);
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping(path = "{studentId}")
+    public int updateEmail(@PathVariable("studentId") UUID studentId,
+                           @RequestBody String email) {
+        return studentService.updateEmail(studentId, email);
+
     }
 
 }

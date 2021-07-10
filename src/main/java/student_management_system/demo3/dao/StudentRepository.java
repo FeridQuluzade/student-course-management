@@ -52,12 +52,15 @@ public class StudentRepository {
                 "FROM student WHERE student_id=?";
 
 
-        return jdbcTemplate.queryForObject(sql, new Object[]{studentId}, ((resultSet, i) -> new Student(
-                UUID.fromString(resultSet.getString("student_id")),
-                resultSet.getString("first_name"),
-                resultSet.getString("last_name"),
-                resultSet.getString("email"),
-                Student.Gender.valueOf(resultSet.getString("gender").toUpperCase()) )));
+        return jdbcTemplate.queryForObject(sql,
+                new Object[]{studentId},
+                ((resultSet, i) -> new Student(
+
+                        UUID.fromString(resultSet.getString("student_id")),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("email"),
+                        Student.Gender.valueOf(resultSet.getString("gender").toUpperCase()))));
     }
 
     public int updateEmail(UUID studentId, String email) {
