@@ -1,5 +1,7 @@
 package student_management_system.demo3.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -14,13 +16,16 @@ import java.util.UUID;
 
 @Repository
 @Profile("dev")
-public class StudentRepositoryDev implements StudentRepository{
+public class StudentRepositoryDev implements StudentRepository {
     private final JdbcTemplate jdbcTemplate;
+
+    private static final Logger log = LoggerFactory.getLogger(StudentRepositoryDev.class);
+
 
 
     public StudentRepositoryDev(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-
+        log.info("Dev profile starting");
     }
 
     public List<Student> selectAllStudents() {
