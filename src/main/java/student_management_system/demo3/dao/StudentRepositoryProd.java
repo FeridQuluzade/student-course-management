@@ -1,5 +1,7 @@
 package student_management_system.demo3.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -15,9 +17,12 @@ import java.util.UUID;
 public class StudentRepositoryProd implements StudentRepository {
     private final JdbcTemplate jdbcTemplate;
 
+    private static final Logger logProduction = LoggerFactory.getLogger(StudentRepositoryProd.class);
+
 
     public StudentRepositoryProd(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        logProduction.info("Production profile starting");
 
     }
 
