@@ -1,13 +1,16 @@
 package student_management_system.demo3.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import student_management_system.demo3.EmailValidator;
 import student_management_system.demo3.dao.StudentRepository;
-import student_management_system.demo3.exception.ApiRequestException;
+
 import student_management_system.demo3.model.Student;
 import student_management_system.demo3.model.StudentCourse;
+import student_management_system.demo3.model.exception.StudentNameException;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +21,7 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final EmailValidator emailValidator;
+    private static final Logger log= LoggerFactory.getLogger(StudentService.class);
 
 
     public StudentService(StudentRepository studentRepository,
@@ -27,7 +31,7 @@ public class StudentService {
     }
 
     public List<Student> getAllStudents() {
-        System.out.println("adsdjhgja");
+
         return studentRepository.selectAllStudents();
     }
 
@@ -45,8 +49,14 @@ public class StudentService {
     }
 
     public Student addNewStudent(UUID studentId, Student student) {
+
+
         UUID newStudentId = Optional.ofNullable(studentId)
                 .orElse(UUID.randomUUID());
+        if (student.getFirstName().isEmpty()){
+            log.warn("student name not valid !");
+            throw  new StudentNameException("Student name is not valid!");
+        }
 
 //        if (!emailValidator.test(student.getEmail())) {
 //            throw new ApiRequestException(student.getEmail() + "is not valid");

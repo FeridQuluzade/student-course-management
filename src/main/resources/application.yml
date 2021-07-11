@@ -1,9 +1,10 @@
 
 app:
   datasource:
-    username: ${Username}
-    password: ${Password}
+    username: postgres
+    password: Pass1234
+    jdbc-url: jdbc:postgresql://localhost:5432/postgres
 
 spring:
   profiles:
-    active: prod
+    active: dev

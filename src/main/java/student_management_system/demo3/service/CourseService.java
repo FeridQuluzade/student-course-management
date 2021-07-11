@@ -2,7 +2,7 @@ package student_management_system.demo3.service;
 
 import org.springframework.stereotype.Service;
 import student_management_system.demo3.dao.CourseRepository;
-import student_management_system.demo3.exception.ApiRequestException;
+
 import student_management_system.demo3.model.Course;
 
 import java.util.List;
@@ -29,8 +29,7 @@ public class CourseService {
 
     private Optional<Course> findCourseById(UUID courseId){
         return Optional.of(courseRepository
-                .selectCourseById(courseId)
-                .orElseThrow(()-> new ApiRequestException("Course couldn't be found by following id:" + courseId)));
+                .selectCourseById(courseId).orElseThrow(()-> new RuntimeException()));
     }
 
     public Course addNewCourse(Course course) {
