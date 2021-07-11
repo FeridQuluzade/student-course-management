@@ -11,7 +11,7 @@ public class Student {
     @JsonIgnore
     private final UUID studentId;
 
-    @NotBlank
+
     private final String firstName;
 
     @NotBlank
