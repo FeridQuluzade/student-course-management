@@ -17,15 +17,14 @@ import java.util.UUID;
 @Repository
 @Profile("dev")
 public class StudentRepositoryDev implements StudentRepository {
+
     private final JdbcTemplate jdbcTemplate;
 
     private static final Logger log = LoggerFactory.getLogger(StudentRepositoryDev.class);
 
-
-
     public StudentRepositoryDev(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        log.info("Dev profile starting");
+        log.info("Dev profile starting ");
     }
 
     public List<Student> selectAllStudents() {

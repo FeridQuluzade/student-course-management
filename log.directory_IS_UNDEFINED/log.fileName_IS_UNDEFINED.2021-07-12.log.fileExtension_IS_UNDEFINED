@@ -1,0 +1,66 @@
+[2021-07-12 18:16:54.939] INFO [Fd] [main]s.demo3.Demo3Application@logStarting:50 - Starting Demo3Application on Fd with PID 2409045 (/home/ferid/IdeaProjects/Student_course_management_system/target/classes started by ferid in /home/ferid/IdeaProjects/Student_course_management_system)
+[2021-07-12 18:16:54.942] INFO [Fd] [main]s.demo3.Demo3Application@logStartupProfileInfo:679 - The following profiles are active: dev
+[2021-07-12 18:16:56.163] INFO [Fd] [main]o.s.b.w.e.tomcat.TomcatWebServer@initialize:90 - Tomcat initialized with port(s): 8080 (http)
+[2021-07-12 18:16:56.181] INFO [Fd] [main]o.a.coyote.http11.Http11NioProtocol@log:173 - Initializing ProtocolHandler ["http-nio-8080"]
+[2021-07-12 18:16:56.193] INFO [Fd] [main]o.a.catalina.core.StandardService@log:173 - Starting service [Tomcat]
+[2021-07-12 18:16:56.194] INFO [Fd] [main]o.a.catalina.core.StandardEngine@log:173 - Starting Servlet engine: [Apache Tomcat/9.0.16]
+[2021-07-12 18:16:56.202] INFO [Fd] [main]o.a.c.core.AprLifecycleListener@log:173 - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib]
+[2021-07-12 18:16:56.284] INFO [Fd] [main]o.a.c.c.C.[Tomcat].[localhost].[/]@log:173 - Initializing Spring embedded WebApplicationContext
+[2021-07-12 18:16:56.284] INFO [Fd] [main]o.s.web.context.ContextLoader@prepareWebApplicationContext:296 - Root WebApplicationContext: initialization completed in 1298 ms
+[2021-07-12 18:16:56.430] INFO [Fd] [main]o.f.c.i.license.VersionPrinter@info:49 - Flyway Community Edition 5.2.4 by Boxfuse
+[2021-07-12 18:16:56.432] INFO [Fd] [main]com.zaxxer.hikari.HikariDataSource@getConnection:110 - HikariPool-1 - Starting...
+[2021-07-12 18:16:56.505] INFO [Fd] [main]com.zaxxer.hikari.HikariDataSource@getConnection:123 - HikariPool-1 - Start completed.
+[2021-07-12 18:16:56.511] INFO [Fd] [main]o.f.c.i.database.DatabaseFactory@info:49 - Database: jdbc:postgresql://localhost:5432/students_dev (PostgreSQL 13.2)
+[2021-07-12 18:16:56.519] WARN [Fd] [main]o.f.c.i.database.base.Database@warn:53 - Flyway upgrade recommended: PostgreSQL 13.2 is newer than this version of Flyway and support has not been tested.
+[2021-07-12 18:16:56.567] INFO [Fd] [main]o.f.core.internal.command.DbValidate@info:49 - Successfully validated 5 migrations (execution time 00:00.024s)
+[2021-07-12 18:16:56.577] INFO [Fd] [main]o.f.core.internal.command.DbMigrate@info:49 - Current version of schema "public": 5
+[2021-07-12 18:16:56.578] INFO [Fd] [main]o.f.core.internal.command.DbMigrate@info:49 - Schema "public" is up to date. No migration necessary.
+[2021-07-12 18:16:56.633] WARN [Fd] [main]o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext@refresh:557 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'studentController' defined in file [/home/ferid/IdeaProjects/Student_course_management_system/target/classes/student_management_system/demo3/controller/StudentController.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'studentService' defined in file [/home/ferid/IdeaProjects/Student_course_management_system/target/classes/student_management_system/demo3/service/StudentService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'student_management_system.demo3.dao.StudentRepository' available: expected single matching bean but found 2: studentRepositoryDev,studentRepositoryIntegration
+[2021-07-12 18:16:56.633] INFO [Fd] [main]com.zaxxer.hikari.HikariDataSource@close:350 - HikariPool-1 - Shutdown initiated...
+[2021-07-12 18:16:56.638] INFO [Fd] [main]com.zaxxer.hikari.HikariDataSource@close:352 - HikariPool-1 - Shutdown completed.
+[2021-07-12 18:16:56.642] INFO [Fd] [main]o.a.catalina.core.StandardService@log:173 - Stopping service [Tomcat]
+[2021-07-12 18:16:56.656] INFO [Fd] [main]o.s.b.a.l.ConditionEvaluationReportLoggingListener@logMessage:142 - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[2021-07-12 18:16:56.661] ERROR [Fd] [main]o.s.b.d.LoggingFailureAnalysisReporter@report:42 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in student_management_system.demo3.service.StudentService required a single bean, but 2 were found:
+	- studentRepositoryDev: defined in file [/home/ferid/IdeaProjects/Student_course_management_system/target/classes/student_management_system/demo3/dao/StudentRepositoryDev.class]
+	- studentRepositoryIntegration: defined in file [/home/ferid/IdeaProjects/Student_course_management_system/target/classes/student_management_system/demo3/dao/StudentRepositoryIntegration.class]
+
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+
+[2021-07-12 18:17:29.285] INFO [Fd] [main]s.demo3.Demo3Application@logStarting:50 - Starting Demo3Application on Fd with PID 2409346 (/home/ferid/IdeaProjects/Student_course_management_system/target/classes started by ferid in /home/ferid/IdeaProjects/Student_course_management_system)
+[2021-07-12 18:17:29.288] INFO [Fd] [main]s.demo3.Demo3Application@logStartupProfileInfo:679 - The following profiles are active: dev
+[2021-07-12 18:17:30.509] INFO [Fd] [main]o.s.b.w.e.tomcat.TomcatWebServer@initialize:90 - Tomcat initialized with port(s): 8080 (http)
+[2021-07-12 18:17:30.526] INFO [Fd] [main]o.a.coyote.http11.Http11NioProtocol@log:173 - Initializing ProtocolHandler ["http-nio-8080"]
+[2021-07-12 18:17:30.537] INFO [Fd] [main]o.a.catalina.core.StandardService@log:173 - Starting service [Tomcat]
+[2021-07-12 18:17:30.538] INFO [Fd] [main]o.a.catalina.core.StandardEngine@log:173 - Starting Servlet engine: [Apache Tomcat/9.0.16]
+[2021-07-12 18:17:30.545] INFO [Fd] [main]o.a.c.core.AprLifecycleListener@log:173 - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib]
+[2021-07-12 18:17:30.623] INFO [Fd] [main]o.a.c.c.C.[Tomcat].[localhost].[/]@log:173 - Initializing Spring embedded WebApplicationContext
+[2021-07-12 18:17:30.624] INFO [Fd] [main]o.s.web.context.ContextLoader@prepareWebApplicationContext:296 - Root WebApplicationContext: initialization completed in 1288 ms
+[2021-07-12 18:17:30.769] INFO [Fd] [main]o.f.c.i.license.VersionPrinter@info:49 - Flyway Community Edition 5.2.4 by Boxfuse
+[2021-07-12 18:17:30.772] INFO [Fd] [main]com.zaxxer.hikari.HikariDataSource@getConnection:110 - HikariPool-1 - Starting...
+[2021-07-12 18:17:30.841] INFO [Fd] [main]com.zaxxer.hikari.HikariDataSource@getConnection:123 - HikariPool-1 - Start completed.
+[2021-07-12 18:17:30.846] INFO [Fd] [main]o.f.c.i.database.DatabaseFactory@info:49 - Database: jdbc:postgresql://localhost:5432/students_dev (PostgreSQL 13.2)
+[2021-07-12 18:17:30.854] WARN [Fd] [main]o.f.c.i.database.base.Database@warn:53 - Flyway upgrade recommended: PostgreSQL 13.2 is newer than this version of Flyway and support has not been tested.
+[2021-07-12 18:17:30.904] INFO [Fd] [main]o.f.core.internal.command.DbValidate@info:49 - Successfully validated 5 migrations (execution time 00:00.027s)
+[2021-07-12 18:17:30.915] INFO [Fd] [main]o.f.core.internal.command.DbMigrate@info:49 - Current version of schema "public": 5
+[2021-07-12 18:17:30.917] INFO [Fd] [main]o.f.core.internal.command.DbMigrate@info:49 - Schema "public" is up to date. No migration necessary.
+[2021-07-12 18:17:30.969] INFO [Fd] [main]s.demo3.dao.StudentRepositoryDev@<init>:28 - Dev profile starting
+[2021-07-12 18:17:31.157] INFO [Fd] [main]o.s.s.c.ThreadPoolTaskExecutor@initialize:171 - Initializing ExecutorService 'applicationTaskExecutor'
+[2021-07-12 18:17:31.394] INFO [Fd] [main]o.a.coyote.http11.Http11NioProtocol@log:173 - Starting ProtocolHandler ["http-nio-8080"]
+[2021-07-12 18:17:31.413] INFO [Fd] [main]o.s.b.w.e.tomcat.TomcatWebServer@start:204 - Tomcat started on port(s): 8080 (http) with context path ''
+[2021-07-12 18:17:31.418] INFO [Fd] [main]s.demo3.Demo3Application@logStarted:59 - Started Demo3Application in 2.57 seconds (JVM running for 3.291)
+[2021-07-12 18:21:17.757] INFO [Fd] [Thread-3]o.s.s.c.ThreadPoolTaskExecutor@shutdown:208 - Shutting down ExecutorService 'applicationTaskExecutor'
+[2021-07-12 18:21:17.758] INFO [Fd] [Thread-3]com.zaxxer.hikari.HikariDataSource@close:350 - HikariPool-1 - Shutdown initiated...
+[2021-07-12 18:21:17.765] INFO [Fd] [Thread-3]com.zaxxer.hikari.HikariDataSource@close:352 - HikariPool-1 - Shutdown completed.

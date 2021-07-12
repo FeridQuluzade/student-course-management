@@ -4,7 +4,7 @@ app:
     username: postgres
     password: Pass1234
     jdbc-url: jdbc:postgresql://localhost:5432/postgres
-
-spring:
-  profiles:
-    active: dev
+#
+#spring:
+#  profiles:
+#    active: dev
